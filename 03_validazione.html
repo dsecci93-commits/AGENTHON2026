@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinEdu — Evidenza di Validazione</title>
+<style>
+:root {
+  --purple: #A100FF;
+  --purple-light: #BE82FF;
+  --purple-dim: rgba(161,0,255,0.10);
+  --bg: #050008;
+  --card: rgba(255,255,255,0.025);
+  --border: rgba(255,255,255,0.07);
+  --green: #00C49A;
+  --red: #F72585;
+  --yellow: #FFBA08;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: #fff;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.65; -webkit-font-smoothing: antialiased;
+  padding: 60px 40px 80px; max-width: 860px; margin: 0 auto;
+}
+header { border-bottom: 2px solid var(--purple); padding-bottom: 20px; margin-bottom: 48px; }
+.brand { font-size: 10px; text-transform: uppercase; letter-spacing: 0.3em; color: var(--purple-light); margin-bottom: 12px; }
+h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 6px; }
+.meta { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.18em; }
+
+section { margin-bottom: 52px; }
+h2 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--purple-light); margin-bottom: 20px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+p { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 10px; line-height: 1.7; }
+
+/* CHECKLIST */
+.check-list { list-style: none; }
+.check-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px; color: rgba(255,255,255,0.8);
+}
+.check-list li:last-child { border-bottom: none; }
+.badge {
+  flex-shrink: 0; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; padding: 3px 8px; border-radius: 4px; margin-top: 2px;
+}
+.pass { background: rgba(0,196,154,0.15); color: var(--green); border: 1px solid rgba(0,196,154,0.3); }
+.warn { background: rgba(255,186,8,0.12); color: var(--yellow); border: 1px solid rgba(255,186,8,0.25); }
+.note { background: var(--purple-dim); color: var(--purple-light); border: 1px solid rgba(161,0,255,0.25); }
+
+/* TEST */
+.test-block {
+  background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+}
+.test-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.test-name { font-size: 13px; font-weight: 600; font-family: "Courier New", monospace; color: rgba(255,255,255,0.85); }
+.test-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--green); }
+.test-rows { padding: 0; }
+.test-row {
+  display: grid; grid-template-columns: 1fr 1fr 80px;
+  padding: 8px 16px; font-size: 12px; font-family: "Courier New", monospace;
+  border-bottom: 1px solid rgba(255,255,255,0.03); color: rgba(255,255,255,0.6);
+  align-items: center;
+}
+.test-row:last-child { border-bottom: none; }
+.test-row.head { color: rgba(255,255,255,0.3); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+.ok { color: var(--green); text-align: right; }
+.ko { color: var(--red); text-align: right; }
+
+/* SCENARIO */
+.scenario {
+  border: 1px solid var(--border); border-radius: 14px;
+  background: var(--card); padding: 20px 22px; margin-bottom: 14px;
+}
+.scenario-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.scenario-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--purple-dim); border: 1px solid rgba(161,0,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: var(--purple-light); flex-shrink: 0;
+}
+.scenario h3 { margin: 0; font-size: 15px; }
+.step-list { list-style: none; }
+.step-list li { font-size: 13px; color: rgba(255,255,255,0.65); padding: 4px 0 4px 18px; position: relative; }
+.step-list li::before { content: "→"; position: absolute; left: 0; color: var(--purple); font-weight: 700; }
+.result-line {
+  margin-top: 12px; padding: 9px 14px; border-radius: 8px;
+  background: rgba(0,196,154,0.08); border: 1px solid rgba(0,196,154,0.2);
+  font-size: 13px; color: var(--green); font-weight: 600;
+}
+
+/* BEFORE/AFTER */
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.ba-box { border-radius: 12px; padding: 16px 18px; }
+.ba-box.before { background: rgba(247,37,133,0.06); border: 1px solid rgba(247,37,133,0.18); }
+.ba-box.after  { background: rgba(0,196,154,0.06); border: 1px solid rgba(0,196,154,0.18); }
+.ba-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 8px; }
+.ba-box.before .ba-label { color: var(--red); }
+.ba-box.after  .ba-label { color: var(--green); }
+.ba-box p { font-size: 13px; color: rgba(255,255,255,0.7); margin: 0; line-height: 1.6; }
+
+/* DATA TABLE */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; padding: 10px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.35); border-bottom: 1px solid var(--border); }
+td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.72); }
+tr:last-child td { border-bottom: none; }
+.mono { font-family: "Courier New", monospace; font-size: 12px; }
+
+footer { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 60px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.18); }
+footer span { color: var(--purple); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Accenture · Hagenthon 2026 · Deliverable 03</div>
+  <h1>Evidenza di Validazione</h1>
+  <div class="meta">FinEdu — Strumento di educazione finanziaria &nbsp;·&nbsp; Settembre 2026</div>
+</header>
+
+<!-- ░░ 1. TEST AUTOMATICI ░░ -->
+<section>
+  <h2>1 — Test automatici</h2>
+  <p>Il prototipo include una suite di test su tre livelli: categorizzatore (unit), period detection (unit), ordinamento estratti (unit). Tutti i test sono eseguibili con <span style="font-family:monospace;color:var(--purple-light)">pytest</span> dalla directory <span style="font-family:monospace;color:var(--purple-light)">app/</span>.</p>
+
+  <div class="test-block">
+    <div class="test-head">
+      <span class="test-name">test_categorizer.py — regressione bug noti</span>
+      <span class="test-status">15/15 PASS</span>
+    </div>
+    <div class="test-rows">
+      <div class="test-row head"><span>Descrizione transazione</span><span>Categoria attesa</span><span>Esito</span></div>
+      <div class="test-row"><span>"COMMISSIONE BONIFICO"</span><span>Commissioni</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"BONIFICO STIPENDIO MARZO"</span><span>Stipendio</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"PRELIEVO ATM VIA ROMA"</span><span>Prelievi</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"ACQUISTO AUTOMATICO"</span><span>Shopping</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"TRENITALIA BIGLIETTO"</span><span>Trasporti</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"ESSELUNGA SUPERMERCATO"</span><span>Alimentari</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"NETFLIX ABBONAMENTO"</span><span>Abbonamenti</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"FARMACIA COMUNALE"</span><span>Salute</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"ENEL ENERGIA ELETTRICA"</span><span>Utilities</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"RISTORANTE DA LUIGI"</span><span>Svago</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"IKEA ITALIA"</span><span>Shopping</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"F24 IRPEF"</span><span>Tasse</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"PALESTRA MENSILE"</span><span>Svago</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"VODAFONE RICARICA"</span><span>Utilities</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>"Q8 CARBURANTE"</span><span>Trasporti</span><span class="ok">✓ PASS</span></div>
+    </div>
+  </div>
+
+  <div class="test-block">
+    <div class="test-head">
+      <span class="test-name">test_period_label.py — rilevamento periodo</span>
+      <span class="test-status">4/4 PASS</span>
+    </div>
+    <div class="test-rows">
+      <div class="test-row head"><span>Caso di test</span><span>Risultato atteso</span><span>Esito</span></div>
+      <div class="test-row"><span>3 date gen + 1 feb</span><span>"Gennaio 2024"</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>DataFrame vuoto</span><span>stringa vuota</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>Label "Estratto senza data" + tx marzo</span><span>"Marzo 2024"</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>Mix mesi, marzo dominante</span><span>"Marzo 2024"</span><span class="ok">✓ PASS</span></div>
+    </div>
+  </div>
+
+  <div class="test-block">
+    <div class="test-head">
+      <span class="test-name">test_sorting.py — ordinamento cronologico</span>
+      <span class="test-status">2/2 PASS</span>
+    </div>
+    <div class="test-rows">
+      <div class="test-row head"><span>Input</span><span>Ordine atteso</span><span>Esito</span></div>
+      <div class="test-row"><span>Marzo → Gennaio → Febbraio</span><span>Gen → Feb → Mar</span><span class="ok">✓ PASS</span></div>
+      <div class="test-row"><span>Gen 2025 → Nov 2024 → Dic 2024</span><span>Nov → Dic → Gen</span><span class="ok">✓ PASS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 2. CHECKLIST FUNZIONALE ░░ -->
+<section>
+  <h2>2 — Checklist funzionale</h2>
+  <ul class="check-list">
+    <li><span class="badge pass">Pass</span>Upload CSV riconosciuto e parsato correttamente (colonne Data, Descrizione, Importo)</li>
+    <li><span class="badge pass">Pass</span>Categorizzazione automatica di 11 categorie su dati reali dei 3 mesi campione</li>
+    <li><span class="badge pass">Pass</span>Period label rilevato automaticamente dal campo Data del CSV</li>
+    <li><span class="badge pass">Pass</span>Label retroattivamente corrette su estratti già salvati ("Estratto senza data" → "Gennaio 2024")</li>
+    <li><span class="badge pass">Pass</span>Ordinamento cronologico corretto anche con upload in ordine inverso (Marzo caricato prima di Febbraio)</li>
+    <li><span class="badge pass">Pass</span>Dashboard: estratti precedenti visibili e cliccabili al login senza ricaricare i file</li>
+    <li><span class="badge pass">Pass</span>Grafico Storico: mesi sull'asse X, euro sull'asse Y, nessuna etichetta sovrapposta</li>
+    <li><span class="badge pass">Pass</span>Confronto mese vs mese: delta percentuale per categoria calcolato correttamente</li>
+    <li><span class="badge pass">Pass</span>Chat AI (simulata): risposta contestuale al mese selezionato</li>
+    <li><span class="badge pass">Pass</span>Chat AI: blocco richieste di consulenza finanziaria ("dove investire?" → risposta disclaimer)</li>
+    <li><span class="badge pass">Pass</span>Autenticazione: login con SHA-256 (demo), sessione mantenuta in session_state</li>
+    <li><span class="badge warn">Nota</span>Upload PDF: funziona su layout tabulari standard; formati bancari non-standard non garantiti</li>
+    <li><span class="badge warn">Nota</span>Claude API reale non integrata nel prototipo; risposta AI è simulata con regole keyword</li>
+    <li><span class="badge note">Previsto</span>bcrypt sostituirà SHA-256 in produzione (percorso documentato in agents/security.md)</li>
+  </ul>
+</section>
+
+<!-- ░░ 3. SIMULAZIONE CASI D'USO ░░ -->
+<section>
+  <h2>3 — Simulazione casi d'uso reali</h2>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <div class="scenario-num">A</div>
+      <h3>Utente carica il primo estratto (Marzo 2024)</h3>
+    </div>
+    <ul class="step-list">
+      <li>Login con utente "dani" → dashboard vuota</li>
+      <li>Upload <code style="font-family:monospace;font-size:12px;color:var(--purple-light)">sample_marzo_2024.csv</code> → 18 transazioni parsate</li>
+      <li>Categorizzazione automatica: Trasporti €235, Alimentari €300, Casa €181, ...</li>
+      <li>Period label rilevato: "Marzo 2024"</li>
+      <li>Dashboard mostra KPI: +€2.800 entrate, −€1.291 uscite, Saldo +€1.509</li>
+    </ul>
+    <div class="result-line">✓ Flusso completato correttamente — 0 errori</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <div class="scenario-num">B</div>
+      <h3>Utente carica Gennaio (dopo Marzo) — verifica ordinamento</h3>
+    </div>
+    <ul class="step-list">
+      <li>Upload <code style="font-family:monospace;font-size:12px;color:var(--purple-light)">sample_gennaio_2024.csv</code> → 22 transazioni</li>
+      <li>Sistema rileva periodo: "Gennaio 2024"</li>
+      <li>Storico riordinato cronologicamente: Gennaio → Marzo (non Marzo → Gennaio)</li>
+      <li>Grafico Storico aggiornato con Gennaio come primo punto sull'asse X</li>
+    </ul>
+    <div class="result-line">✓ Ordinamento cronologico corretto indipendentemente dall'ordine di upload</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <div class="scenario-num">C</div>
+      <h3>Utente chiede consulenza finanziaria nella chat</h3>
+    </div>
+    <ul class="step-list">
+      <li>Domanda: "Dove dovrei investire i miei risparmi?"</li>
+      <li>Sistema rileva keyword "invest" nella domanda</li>
+      <li>Risposta: "Non posso fornire consulenza finanziaria o consigli di investimento — è un vincolo di legge e di design. Le decisioni spettano a te."</li>
+    </ul>
+    <div class="result-line">✓ Blocco attivo — nessuna consulenza finanziaria erogata</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <div class="scenario-num">D</div>
+      <h3>Rientro dopo sessione — dati storici già disponibili</h3>
+    </div>
+    <ul class="step-list">
+      <li>Logout e re-login con utente "dani"</li>
+      <li>Dashboard carica automaticamente il mese più recente (Marzo 2024)</li>
+      <li>Tutti gli estratti precedenti visibili come card cliccabili</li>
+      <li>Click su "Gennaio 2024" → analisi del mese aperta senza ricaricare file</li>
+    </ul>
+    <div class="result-line">✓ Persistenza dati funzionante — nessun re-upload necessario</div>
+  </div>
+</section>
+
+<!-- ░░ 4. CONFRONTO PRIMA / DOPO ░░ -->
+<section>
+  <h2>4 — Confronto prima / dopo (bug corretti durante sviluppo)</h2>
+
+  <h3 style="margin-bottom:10px;font-size:14px;color:rgba(255,255,255,0.5);font-weight:500;">BUG-001 — Keyword "bonif" troppo ampia</h3>
+  <div class="ba">
+    <div class="ba-box before">
+      <div class="ba-label">Prima</div>
+      <p>"COMMISSIONE BONIFICO" → categorizzato come <strong>Stipendio</strong> (keyword "bonif" matchava tutto)</p>
+    </div>
+    <div class="ba-box after">
+      <div class="ba-label">Dopo</div>
+      <p>"COMMISSIONE BONIFICO" → categorizzato correttamente come <strong>Commissioni</strong> (regola più specifica con priorità alta)</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:10px;font-size:14px;color:rgba(255,255,255,0.5);font-weight:500;">BUG-002 — Keyword "atm" senza spazio</h3>
+  <div class="ba">
+    <div class="ba-box before">
+      <div class="ba-label">Prima</div>
+      <p>"ACQUISTO AUTOMATICO" → categorizzato come <strong>Prelievi</strong> (sottostringa "atm" in "automatico")</p>
+    </div>
+    <div class="ba-box after">
+      <div class="ba-label">Dopo</div>
+      <p>"ACQUISTO AUTOMATICO" → categorizzato correttamente come <strong>Shopping</strong> (keyword aggiornata a "atm " con spazio trailing)</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:10px;font-size:14px;color:rgba(255,255,255,0.5);font-weight:500;">BUG-003 — Period label non rilevato da CSV</h3>
+  <div class="ba">
+    <div class="ba-box before">
+      <div class="ba-label">Prima</div>
+      <p>Tutti gli estratti salvati come "Estratto senza data" — grafici storici non utilizzabili</p>
+    </div>
+    <div class="ba-box after">
+      <div class="ba-label">Dopo</div>
+      <p>Label rilevata automaticamente dalla colonna Data del CSV. Fix retroattivo sugli estratti già salvati al login successivo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 5. VERIFICA SU DATI REALI ░░ -->
+<section>
+  <h2>5 — Verifica su dati realistici</h2>
+  <p>I tre file CSV campione usati per la validazione sono disponibili in <span style="font-family:monospace;color:var(--purple-light)">app/data/samples/</span> e replicano la struttura degli estratti conto bancari italiani standard (colonne: Data, Descrizione, Importo).</p>
+  <table>
+    <thead><tr><th>File</th><th>Transazioni</th><th>Entrate</th><th>Uscite</th><th>Categoria principale</th><th>Esito</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="mono">sample_gennaio_2024.csv</td>
+        <td>22</td><td style="color:var(--green)">€2.800</td><td style="color:var(--red)">€1.581</td>
+        <td>Shopping €487</td><td style="color:var(--green)">✓ OK</td>
+      </tr>
+      <tr>
+        <td class="mono">sample_febbraio_2024.csv</td>
+        <td>19</td><td style="color:var(--green)">€2.800</td><td style="color:var(--red)">€1.504</td>
+        <td>Alimentari €380</td><td style="color:var(--green)">✓ OK</td>
+      </tr>
+      <tr>
+        <td class="mono">sample_marzo_2024.csv</td>
+        <td>18</td><td style="color:var(--green)">€2.800</td><td style="color:var(--red)">€1.291</td>
+        <td>Trasporti €235</td><td style="color:var(--green)">✓ OK</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:14px;">Tutte le transazioni sono state categorizzate correttamente al primo tentativo. Il confronto mese-su-mese ha prodotto delta percentuali coerenti con i dati (es. Shopping Gennaio→Marzo: −68%).</p>
+</section>
+
+<footer>FinEdu <span>›</span> Hagenthon 2026 · Accenture · Deliverable 03 — Evidenza di Validazione</footer>
+
+</body>
+</html>

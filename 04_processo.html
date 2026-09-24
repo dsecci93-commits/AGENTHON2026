@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinEdu — Nota sul Processo</title>
+<style>
+:root {
+  --purple: #A100FF;
+  --purple-light: #BE82FF;
+  --purple-dim: rgba(161,0,255,0.10);
+  --bg: #050008;
+  --card: rgba(255,255,255,0.025);
+  --border: rgba(255,255,255,0.07);
+  --green: #00C49A;
+  --red: #F72585;
+  --yellow: #FFBA08;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: #fff;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.65; -webkit-font-smoothing: antialiased;
+  padding: 60px 40px 80px; max-width: 860px; margin: 0 auto;
+}
+header { border-bottom: 2px solid var(--purple); padding-bottom: 20px; margin-bottom: 48px; }
+.brand { font-size: 10px; text-transform: uppercase; letter-spacing: 0.3em; color: var(--purple-light); margin-bottom: 12px; }
+h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 6px; }
+.meta { font-size: 12px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.18em; }
+
+section { margin-bottom: 52px; }
+h2 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--purple-light); margin-bottom: 20px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+p { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 12px; line-height: 1.75; }
+p:last-child { margin-bottom: 0; }
+
+/* AGENT FLOW */
+.flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; row-gap: 10px; margin: 20px 0; justify-content: center; }
+.fnode {
+  border: 1px solid rgba(161,0,255,0.22); border-radius: 10px;
+  background: rgba(161,0,255,0.06); padding: 10px 16px; text-align: center; flex-shrink: 0;
+}
+.fnode.main { border-color: var(--purple); background: rgba(161,0,255,0.14); }
+.fnode .ft { font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple-light); margin-bottom: 2px; }
+.fnode .fn { font-size: 13px; font-weight: 700; }
+.farrow { color: var(--purple); font-size: 16px; padding: 0 5px; flex-shrink: 0; }
+
+/* ITEM LIST */
+.item-list { list-style: none; }
+.item-list li {
+  padding: 13px 0 13px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: start;
+}
+.item-list li:last-child { border-bottom: none; }
+.item-key { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.12em; padding-top: 1px; }
+.item-val { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.65; }
+
+/* CARD GRID */
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.card {
+  border: 1px solid var(--border); border-radius: 14px;
+  background: var(--card); padding: 20px 22px;
+}
+.card.accent { border-color: rgba(161,0,255,0.22); background: rgba(161,0,255,0.04); }
+.card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.card p { font-size: 13px; color: rgba(255,255,255,0.62); margin-bottom: 0; line-height: 1.65; }
+.card ul { list-style: none; }
+.card ul li { font-size: 13px; color: rgba(255,255,255,0.62); padding: 4px 0 4px 16px; position: relative; }
+.card ul li::before { content:"›"; position:absolute; left:0; color:var(--purple); font-weight:700; }
+
+/* DECISION TABLE */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 4px; }
+th { text-align: left; padding: 10px 14px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); border-bottom: 1px solid var(--border); }
+td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.72); vertical-align: top; line-height: 1.55; }
+tr:last-child td { border-bottom: none; }
+td:first-child { font-weight: 600; color: rgba(255,255,255,0.9); white-space: nowrap; }
+td:nth-child(2) { color: rgba(255,255,255,0.5); font-style: italic; }
+
+/* LIMITS */
+.limit-list { list-style: none; }
+.limit-list li {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.limit-list li:last-child { border-bottom: none; }
+.lbadge {
+  flex-shrink: 0; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; padding: 3px 8px; border-radius: 4px; margin-top: 2px; white-space: nowrap;
+}
+.tech  { background: rgba(255,186,8,0.12); color: var(--yellow); border: 1px solid rgba(255,186,8,0.25); }
+.scope { background: rgba(173,181,189,0.1); color: #ADB5BD; border: 1px solid rgba(173,181,189,0.2); }
+.next  { background: rgba(0,196,154,0.1); color: var(--green); border: 1px solid rgba(0,196,154,0.22); }
+.limit-text { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.65; }
+
+footer { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 60px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.18); }
+footer span { color: var(--purple); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Accenture · Hagenthon 2026 · Deliverable 04</div>
+  <h1>Nota sul Processo</h1>
+  <div class="meta">FinEdu — Strumento di educazione finanziaria &nbsp;·&nbsp; Settembre 2026</div>
+</header>
+
+<!-- ░░ 1. COME È STATO USATO L'AI ░░ -->
+<section>
+  <h2>1 — Come è stato usato l'AI</h2>
+  <p>Il progetto ha adottato <strong>Claude Code in modalità multi-agente</strong>: un agente orchestratore coordina cinque sub-agenti specializzati, ciascuno con scope definito, output format strutturato e vincoli espliciti di non-sovrapposizione.</p>
+
+  <div class="flow">
+    <div class="fnode main"><div class="ft">Lead</div><div class="fn">Orchestrator</div></div>
+    <span class="farrow">→</span>
+    <div class="fnode"><div class="ft">Server</div><div class="fn">Backend</div></div>
+    <span class="farrow">·</span>
+    <div class="fnode"><div class="ft">UI</div><div class="fn">Frontend</div></div>
+    <span class="farrow">·</span>
+    <div class="fnode"><div class="ft">AI</div><div class="fn">GenAI</div></div>
+    <span class="farrow">·</span>
+    <div class="fnode"><div class="ft">GDPR</div><div class="fn">Security</div></div>
+    <span class="farrow">·</span>
+    <div class="fnode"><div class="ft">QA</div><div class="fn">Testing</div></div>
+  </div>
+
+  <ul class="item-list">
+    <li>
+      <span class="item-key">Sviluppo codice</span>
+      <span class="item-val">Il prototipo Streamlit (<code style="font-family:monospace;font-size:12px;color:var(--purple-light)">app.py</code>, ~1.200 righe) è stato prodotto dall'agente backend con supervisione continua. Ogni funzione critica è stata proposta, revisionata e corretta prima dell'integrazione.</span>
+    </li>
+    <li>
+      <span class="item-key">Documentazione</span>
+      <span class="item-val">I 7 file agente in <code style="font-family:monospace;font-size:12px;color:var(--purple-light)">agents/</code>, il workflow, e il documento di requisiti B2C sono stati generati con l'agente orchestratore seguendo un template strutturato per ruolo, scope e vincoli.</span>
+    </li>
+    <li>
+      <span class="item-key">Presentazione</span>
+      <span class="item-val">La presentazione HTML con mock interattivo (<code style="font-family:monospace;font-size:12px;color:var(--purple-light)">presentation/index.html</code>) è stata generata e verificata nel browser tramite gli strumenti di preview integrati in Claude Code.</span>
+    </li>
+    <li>
+      <span class="item-key">Debug e test</span>
+      <span class="item-val">I bug sono stati identificati attraverso test manuali sul prototipo in esecuzione, poi corretti dall'agente e verificati con regression test specifici. Il testing agent ha mantenuto un catalogo dei bug noti (BUG-001→BUG-006).</span>
+    </li>
+    <li>
+      <span class="item-key">Cosa l'AI non ha fatto</span>
+      <span class="item-val">L'AI non ha preso decisioni autonome su sicurezza o compliance, non ha acceduto a dati bancari reali, e non ha generato contenuti che simulassero consulenza finanziaria. Ogni output in questi ambiti ha richiesto approvazione esplicita.</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ░░ 2. OUTPUT RIVISTI DA PERSONE ░░ -->
+<section>
+  <h2>2 — Output rivisti o corretti da persone</h2>
+  <div class="card-grid">
+    <div class="card accent">
+      <h3>🔍 Regole di categorizzazione</h3>
+      <p>Le keyword del categorizzatore sono state testate manualmente su transazioni reali. Sono stati trovati e corretti due falsi positivi non rilevabili dai test automatici: "bonif" che matchava commissioni, e "atm" che matchava "automatico".</p>
+    </div>
+    <div class="card accent">
+      <h3>⚠️ System prompt AI</h3>
+      <p>Il testo del prompt anti-consulenza finanziaria è stato scritto dall'agente e validato dalla persona per assicurarsi che il confine tra analisi educativa e consiglio finanziario fosse corretto e non ambiguo.</p>
+    </div>
+    <div class="card">
+      <h3>🔒 Logica di sicurezza</h3>
+      <p>Le scelte su hashing delle password (SHA-256 per la demo, bcrypt per la produzione) e sulla privacy-safe payload verso Claude API sono state discusse e approvate esplicitamente — non lasciate all'AI in autonomia.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Grafici e UX</h3>
+      <p>La disposizione degli assi (mesi su X, euro su Y), la rimozione delle etichette sovrapponte e la palette colori per categoria sono state imposte come vincoli espliciti dopo una prima versione non soddisfacente.</p>
+    </div>
+    <div class="card">
+      <h3>🧪 Test di regressione</h3>
+      <p>I casi di test per i bug corretti sono stati scritti dopo verifica manuale del comportamento errato, non generati in anticipo dall'AI. Ogni test case è documentato con l'ID del bug corrispondente.</p>
+    </div>
+    <div class="card">
+      <h3>📝 Documenti di progetto</h3>
+      <p>I requisiti B2C, la nota sul processo e l'evidenza di validazione sono stati strutturati dalla persona con outline esplicito. L'AI ha riempito il contenuto, la persona ha verificato accuratezza e completezza.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 3. DECISIONI TECNICHE ░░ -->
+<section>
+  <h2>3 — Decisioni tecniche prese</h2>
+  <table>
+    <thead><tr><th>Decisione</th><th>Alternativa scartata</th><th>Motivazione</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Streamlit per il prototipo</td>
+        <td>FastAPI + React</td>
+        <td>Velocità di sviluppo prioritaria in contesto hackathon; percorso di migrazione documentato</td>
+      </tr>
+      <tr>
+        <td>Privacy-safe payload verso l'AI (solo aggregati)</td>
+        <td>Inviare le transazioni raw per risposte più ricche</td>
+        <td>Vincolo architetturale non negoziabile: dati bancari identificativi non devono uscire dal backend</td>
+      </tr>
+      <tr>
+        <td>Fallback deterministico keyword-based</td>
+        <td>Dipendere interamente da Claude API</td>
+        <td>Il sistema deve funzionare anche offline o in caso di timeout; l'AI è enhancement, non dipendenza critica</td>
+      </tr>
+      <tr>
+        <td>SHA-256 per la demo, bcrypt per produzione</td>
+        <td>bcrypt anche nel prototipo</td>
+        <td>Semplificare la demo senza dipendenze pesanti; il percorso di upgrade è documentato e testato</td>
+      </tr>
+      <tr>
+        <td>Ordinamento cronologico persistito su disco</td>
+        <td>Ordinamento in memoria ad ogni query</td>
+        <td>Fonte di verità sempre ordinata; evita resorting e disallineamenti tra sessioni diverse</td>
+      </tr>
+      <tr>
+        <td>First-match wins nelle regole keyword</td>
+        <td>Scoring pesato su più keyword</td>
+        <td>Semplicità e predicibilità; le regole più specifiche vengono prima, riducendo i falsi positivi</td>
+      </tr>
+      <tr>
+        <td>dayfirst=True nel parser date</td>
+        <td>ISO 8601 (AAAA-MM-GG) come default</td>
+        <td>Gli estratti bancari italiani usano il formato GG/MM/AAAA; il fallback ISO gestisce i CSV moderni</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ░░ 4. LIMITI IDENTIFICATI ░░ -->
+<section>
+  <h2>4 — Limiti della soluzione identificati</h2>
+  <ul class="limit-list">
+    <li>
+      <span class="lbadge tech">Tecnico</span>
+      <span class="limit-text"><strong>Parser PDF limitato ai layout tabulari standard.</strong> Il parser basato su pdfplumber funziona con estratti in formato tabella. I formati proprietari di alcune banche italiane (testo non strutturato, immagini scannerizzate) non sono supportati nel prototipo.</span>
+    </li>
+    <li>
+      <span class="lbadge tech">Tecnico</span>
+      <span class="limit-text"><strong>Categorizzazione keyword-based con falsi positivi su descrizioni ambigue.</strong> Transazioni con descrizioni molto generiche (es. "PAGAMENTO ONLINE") cadono in Shopping per default. Un modello ML personalizzato ridurrebbe significativamente l'errore, ma è fuori scope per il prototipo.</span>
+    </li>
+    <li>
+      <span class="lbadge scope">Scope</span>
+      <span class="limit-text"><strong>Claude API non integrata nel prototipo.</strong> La chat AI usa risposte simulate con regole keyword. Le risposte reali di Claude sarebbero qualitativamente superiori, ma richiedono la gestione sicura di API key in produzione, rate limiting e test aggiuntivi non fattibili in hackathon.</span>
+    </li>
+    <li>
+      <span class="lbadge scope">Scope</span>
+      <span class="limit-text"><strong>Autenticazione semplificata (SHA-256 + JSON).</strong> La demo usa hashing SHA-256 e file JSON per utente al posto di PostgreSQL + bcrypt. Il percorso di migrazione è documentato in <code style="font-family:monospace;font-size:12px;color:var(--purple-light)">agents/security.md</code> con checklist di sign-off.</span>
+    </li>
+    <li>
+      <span class="lbadge scope">Scope</span>
+      <span class="limit-text"><strong>Nessuna gestione multi-utente concorrente.</strong> Streamlit non è progettato per sessioni concorrenti ad alta scala. L'architettura target FastAPI + PostgreSQL risolve questo problema, ma richiede la fase 2 del progetto.</span>
+    </li>
+    <li>
+      <span class="lbadge next">Prossimo step</span>
+      <span class="limit-text"><strong>Mobile non disponibile nel prototipo.</strong> La versione web è responsive ma non è un'app nativa. Il piano Flutter per iOS/Android è definito nella roadmap della presentazione — stimato come fase 4 del progetto.</span>
+    </li>
+  </ul>
+</section>
+
+<footer>FinEdu <span>›</span> Hagenthon 2026 · Accenture · Deliverable 04 — Nota sul Processo</footer>
+
+</body>
+</html>
