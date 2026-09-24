@@ -15,6 +15,10 @@ build/
 # Dati utente (non commitmare dati reali)
 app/data/users/
 
+# Secrets (MAI committare)
+.env
+*.env.local
+
 # Node
 node_modules/
 
